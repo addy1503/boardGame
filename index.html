@@ -5,7 +5,7 @@
 div#memory_board{
 	background:#CCC;
 	border:#999 1px solid;
-	width:800px;
+	width:650px;
 	height:540px;
 	padding:24px;
 	margin:0px auto;
@@ -13,7 +13,7 @@ div#memory_board{
 div#memory_board > div{
 	background: url(tile_bg.jpg) no-repeat;
 	border:#000 1px solid;
-	width:71px;
+	width:90px;
 	height:71px;
 	float:left;
 	margin:10px;
@@ -24,18 +24,44 @@ div#memory_board > div{
 }
 </style>
 <script>
-var memory_array = ['A','A','B','B','C','C','D','D','E','E','F','F','G','G','H','H','I','I','J','J','K','K','L','L'];
+var memory_array = ['A','A','B','B','C','C','D','D','E','E','F','F','G','G','H','H'];
 var memory_values = [];
 var memory_tile_ids = [];
 var tiles_flipped = 0;
-var currentCountDown = createCountDown(30000);
-var countDownValue = currentCountDown(); 
-var myVar = setInterval(myTimer, 1000);
 
-function myTimer(time) {
-    var d = new Date();
-    document.getElementById("demo").innerHTML = d.toLocaleTimeString();
-}
+
+
+// Set the date we're counting down to
+var countDownDate = new Date().getTime()+60000;
+console.log(countDownDate);
+// Update the count down every 1 second
+var x = setInterval(function() {
+
+    // Get todays date and time
+    var now = new Date().getTime();
+    
+    // Find the distance between now an the count down date
+    var distance = countDownDate - now;
+    
+    // Time calculations for days, hours, minutes and seconds
+    var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+    
+    // Output the result in an element with id="demo"
+    document.getElementById("demo").innerHTML = minutes + "m " + seconds + "s ";
+    
+    // If the count down is over, write some text 
+    if (distance < 0) {
+        clearInterval(x);
+        document.getElementById("demo").innerHTML = "EXPIRED";
+    }
+}, 1000);
+
+
+
+    
 Array.prototype.memory_tile_shuffle = function(){
     var i = this.length, j, temp;
     while(--i > 0){
@@ -54,12 +80,7 @@ function newBoard(){
 	}
 	document.getElementById('memory_board').innerHTML = output;
 }
-function createCountDown(timeRemaining) {
-    var startTime = Date.now();
-    return function() {
-       return timeRemaining - ( Date.now() - startTime );
-    }
-}
+
 function memoryFlipTile(tile,val){
 	if(tile.innerHTML == "" && memory_values.length < 2){
 		tile.style.background = '#FFF';
