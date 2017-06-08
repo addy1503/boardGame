@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
-<head>
+<head> <script src="https://apis.google.com/js/platform.js" async defer></script>
+<meta name="google-signin-client_id" content="894321586184-ern8nufph947ubff8gkkd99hj54lqsl8.apps.googleusercontent.com">
 <style>
 div#memory_board{
 	background:#CCC;
@@ -58,10 +59,13 @@ var x = setInterval(function() {
         document.getElementById("demo").innerHTML = "EXPIRED";
     }
 }, 1000);
-
-
-
-    
+function onSignIn(googleUser) {
+  var profile = googleUser.getBasicProfile();
+  console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+  console.log('Name: ' + profile.getName());
+  console.log('Image URL: ' + profile.getImageUrl());
+  console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+}
 Array.prototype.memory_tile_shuffle = function(){
     var i = this.length, j, temp;
     while(--i > 0){
@@ -123,10 +127,17 @@ function memoryFlipTile(tile,val){
 		}
 	}
 }
-
+function signOut() {
+    var auth2 = gapi.auth2.getAuthInstance();
+    auth2.signOut().then(function () {
+      console.log('User signed out.');
+    });
+  }
 </script>
 </head>
 <body>
+<div class="g-signin2" data-onsuccess="onSignIn"></div>
+<a href="#" onclick="signOut();">Sign out</a>
 <p id="demo"></p>
 <button onclick='myTimer(30000)'>Click</button>
 <div id="memory_board"></div>
