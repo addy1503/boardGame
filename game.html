@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head> <script src="https://apis.google.com/js/platform.js" async defer></script>
+<meta name="google-signin-client_id" content="894321586184-ern8nufph947ubff8gkkd99hj54lqsl8.apps.googleusercontent.com">
+<link rel="stylesheet" type="text/css" href="index.css">
+<script type="text/javascript" src="index.js"></script>
+</head>
+<body>
+<a href="#" onclick="signOut();">Sign out</a>
+<p id="demo"></p>
+<!-- <button>Click</button> -->
+<div id="memory_board"></div>
+<script>newBoard();</script>
+<script src="https://apis.google.com/js/platform.js?onload=onLoad" async defer></script>
+<script>
+    function signOut() {
+      var auth2 = gapi.auth2.getAuthInstance();
+      auth2.signOut().then(function () {
+        console.log('User signed out.');
+        window.location.replace("index.html");
+      });
+    }
+
+    function onLoad() {
+      gapi.load('auth2', function() {
+        gapi.auth2.init();
+      });
+    }
+  </script>
+</body>
+</html>

@@ -18,8 +18,7 @@ var x = setInterval(function() {
     var distance = countDownDate - now;
     
     // Time calculations for days, hours, minutes and seconds
-    var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-    var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    
     var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
     var seconds = Math.floor((distance % (1000 * 60)) / 1000);
     
@@ -29,7 +28,7 @@ var x = setInterval(function() {
     // If the count down is over, write some text 
     if (distance < 0) {
         clearInterval(x);
-        document.getElementById("demo").innerHTML = "EXPIRED";
+        document.getElementById("demo").innerHTML = "Expired";
     }
 }, 1000);
 function onSignIn(googleUser) {
@@ -38,6 +37,8 @@ function onSignIn(googleUser) {
   console.log('Name: ' + profile.getName());
   console.log('Image URL: ' + profile.getImageUrl());
   console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+  window.location.replace("game.html");
+
 }
 Array.prototype.memory_tile_shuffle = function(){
     var i = this.length, j, temp;
@@ -100,9 +101,14 @@ function memoryFlipTile(tile,val){
 		}
 	}
 }
-function signOut() {
-    var auth2 = gapi.auth2.getAuthInstance();
-    auth2.signOut().then(function () {
-      console.log('User signed out.');
-    });
-  }
+// function signOut() {
+// 	// gapi.auth2.init({
+//  //      client_id: '894321586184-ern8nufph947ubff8gkkd99hj54lqsl8.apps.googleusercontent.com'
+//  //    });
+//     var auth2 = gapi.auth2.getAuthInstance();
+//     auth2.signOut().then(function () {
+//       console.log('User signed out.');
+//       window.location.replace("index.html");
+//     });
+//   }
+// localstorage.setItem('');
