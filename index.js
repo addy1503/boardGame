@@ -3,15 +3,12 @@ var memory_values = [];
 var memory_tile_ids = [];
 var tiles_flipped = 0;
 
-
-
 // Set the date we're counting down to
-var countDownDate = new Date().getTime()+120000;
+function timer(){
+var countDownDate = new Date().getTime()+60000;
 console.log(countDownDate);
-// Update the count down every 1 second
 var x = setInterval(function() {
-
-    // Get todays date and time
+ // Get todays date and time
     var now = new Date().getTime();
     
     // Find the distance between now an the count down date
@@ -29,8 +26,10 @@ var x = setInterval(function() {
     if (distance < 0) {
         clearInterval(x);
         document.getElementById("demo").innerHTML = "Game Over!";
+        document.getElementById('memory_board').innerHTML = "";
     }
 }, 1000);
+}
 function onSignIn(googleUser) {
   var profile = googleUser.getBasicProfile();
   console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
@@ -100,6 +99,10 @@ function memoryFlipTile(tile,val){
 			}
 		}
 	}
+}
+function func(){
+	newBoard();
+	timer();
 }
 // function signOut() {
 // 	// gapi.auth2.init({
