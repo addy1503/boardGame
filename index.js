@@ -3,6 +3,7 @@ var memory_values = [];
 var memory_tile_ids = [];
 var tiles_flipped = 0;
 function myfunc(){
+	document.getElementById('demo').style.display = 'block';
 	clearTimeout(window.timer);
 	countdown(60,'demo');
 	newBoard();
@@ -11,22 +12,27 @@ function myfunc(){
 function countdown(secs,demo){
 	var demos=document.getElementById(demo);
 	demos.innerHTML="Time Remaining: "+secs+ ' Seconds.';
-	if (secs<1){
+	check(secs);
+		saveTime(secs);
+		secs--;	
+    window.timer = setTimeout('countdown('+secs+',"'+demo+'")',1000);
+}
+function check(secs){
+	if (secs==0){
 		clearTimeout(window.timer);
-		demos.innerHTML='';
-		alert("Game Over!");
+		console.log(window.timer);
+		document.getElementById('demo').style.display = 'none';
+		document.getElementById('demo').innerHTML='';
+		// alert("Game Over!");
 		localStorage.setItem("result","Loss");
 		var div = document.getElementById('resultTable');
 		div.innerHTML +="<tr><td>"+localStorage.getItem("name")+"</td><td>-</td><td>"+localStorage.getItem("result")+"</td></tr>";
-		}
-		saveTime(secs);
-		secs--;
-		
-    window.timer = setTimeout('countdown('+secs+',"'+demo+'")',1000);
+	}
+	clearTimeout(window.timer);
 }
 function saveTime(secs){
 	localStorage.setItem("timeTaken",60-secs);
-	console.log(localStorage.getItem("timeTaken"));
+	// console.log(localStorage.getItem("timeTaken"));
 }
 function onSignIn(googleUser) {
   var profile = googleUser.getBasicProfile();
@@ -83,6 +89,7 @@ function memoryFlipTile(tile,val){
 					var div = document.getElementById('resultTable');
 					div.innerHTML +="<tr><td>"+localStorage.getItem("name")+"</td><td>"+localStorage.getItem("timeTaken")+" Seconds</td><td>"+localStorage.getItem("result")+"</td></tr>";
 					console.log(window.timer);
+					document.getElementById('demo').style.display = 'none';
 					clearTimeout(window.timer);
 					
 				}
