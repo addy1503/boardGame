@@ -13,10 +13,20 @@ function countdown(secs,demo){
 	demos.innerHTML="Time Remaining: "+secs+ ' Seconds.';
 	if (secs<1){
 		clearTimeout(window.timer);
-		demos.innerHTML='Game Over!';
+		demos.innerHTML='';
+		alert("Game Over!");
+		localStorage.setItem("result","Loss");
+		var div = document.getElementById('resultTable');
+		div.innerHTML +="<tr><td>"+localStorage.getItem("name")+"</td><td>-</td><td>"+localStorage.getItem("result")+"</td></tr>";
 		}
+		saveTime(secs);
 		secs--;
+		
     window.timer = setTimeout('countdown('+secs+',"'+demo+'")',1000);
+}
+function saveTime(secs){
+	localStorage.setItem("timeTaken",60-secs);
+	console.log(localStorage.getItem("timeTaken"));
 }
 function onSignIn(googleUser) {
   var profile = googleUser.getBasicProfile();
@@ -25,6 +35,7 @@ function onSignIn(googleUser) {
   console.log('Image URL: ' + profile.getImageUrl());
   console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
   window.location.replace("game.html");
+  localStorage.setItem("name",profile.getName());
 
 }
 Array.prototype.memory_tile_shuffle = function(){
@@ -45,6 +56,7 @@ function newBoard(){
 	}
 	document.getElementById('memory_board').innerHTML = output;
 }
+	
 
 function memoryFlipTile(tile,val){
 	if(tile.innerHTML == "" && memory_values.length < 2){
@@ -61,22 +73,20 @@ function memoryFlipTile(tile,val){
 				console.log(memory_tile_ids[0]);
 				document.getElementById(memory_tile_ids[0]).innerHTML=null;
 				document.getElementById(memory_tile_ids[1]).innerHTML=null;
-				// Clear both arrays
 				memory_values = [];
             	memory_tile_ids = [];
-				// Check to see if the whole board is cleared
 				
 				if(tiles_flipped == memory_array.length){
 					alert("You win!");
+					localStorage.setItem("result","Win");
 					document.getElementById('memory_board').innerHTML = "";
-					// newBoard();
+					var div = document.getElementById('resultTable');
+					div.innerHTML +="<tr><td>"+localStorage.getItem("name")+"</td><td>"+localStorage.getItem("timeTaken")+" Seconds</td><td>"+localStorage.getItem("result")+"</td></tr>";
+					console.log(window.timer);
+					clearTimeout(window.timer);
+					
 				}
-				// else{
-				// 	alert("you lose");
-				// 	newBoard();
-				// }
-				
-			} else {
+				} else {
 				function flip2Back(){
 				    // Flip the 2 tiles back over
 				    var tile_1 = document.getElementById(memory_tile_ids[0]);
