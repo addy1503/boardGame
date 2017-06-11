@@ -8,9 +8,9 @@
 <body>
 <a href="#" onclick="signOut();">Sign out</a>
 <p id="demo"></p>
-<button onclick="func()">Reset</button> 
+<button onclick="myfunc()">Start</button>
+<button onclick="myfunc()">Reset</button> 
 <div id="memory_board"></div>
-<script>newBoard()</script>
 <script src="https://apis.google.com/js/platform.js?onload=onLoad" async defer></script>
 <script>
     function signOut() {
@@ -26,6 +26,7 @@
         gapi.auth2.init();
       });
     }
+    // countdown(10,"demo");
   </script>
 </body>
 </html>
